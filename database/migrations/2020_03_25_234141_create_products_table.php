@@ -18,8 +18,10 @@ class CreateProductsTable extends Migration
             $table->string('code');
             $table->string('name');
             $table->integer('quantity');
-            $table->integer('price');
-            $table->foreignId('category')
+            $table->integer('unit_price');
+            $table->integer('mayor_price');
+            $table->integer('purchase_price');
+            $table->foreignId('category_id')
                 ->nullable()
                 ->constrained()
                 ->onDelete('set null');

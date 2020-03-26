@@ -16,6 +16,7 @@ class CreateSalesTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->string('message')->nullable();
+            $table->integer('total_price')->nullable();
             $table->timestamps();
         });
     }

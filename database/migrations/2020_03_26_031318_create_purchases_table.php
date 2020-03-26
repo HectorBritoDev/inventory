@@ -16,6 +16,7 @@ class CreatePurchasesTable extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
             $table->string('message')->nullable();
+            $table->integer('total_price')->nullable();
             $table->timestamps();
         });
     }
