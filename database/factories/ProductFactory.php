@@ -9,7 +9,9 @@ $factory->define(Product::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
         'code' => $faker->ean8,
-        'quantity' => $faker->randonNumber(3),
-        'price' => $faker->randonNumber(7),
+        'quantity' => $faker->randomNumber(3),
+        'unit_price' => $faker->randomNumber(7),
+        'mayor_price' => $faker->randomNumber(6),
+        'purchase_price' => $faker->randomNumber(5),
     ];
 });
