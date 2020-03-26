@@ -15,7 +15,7 @@ class CreateSaleItemsTable extends Migration
     {
         Schema::create('sale_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sales_id')
+            $table->foreignId('sale_id')
                 ->constrained()
                 ->onDelete('cascade');
             $table->string('name');
