@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(SaleItem::class, function (Faker $faker) {
     return [
-        //
+        'quantity' => $faker->randomNumber(3),
     ];
 });
