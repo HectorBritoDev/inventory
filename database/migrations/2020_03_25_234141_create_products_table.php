@@ -19,6 +19,11 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->integer('quantity');
             $table->integer('price');
+            $table->foreignId('category')
+                ->nullable()
+                ->constrained()
+                ->onDelete('set null');
+
             $table->timestamps();
         });
     }
