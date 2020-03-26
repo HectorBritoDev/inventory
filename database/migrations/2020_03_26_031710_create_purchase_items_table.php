@@ -19,6 +19,7 @@ class CreatePurchaseItemsTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
             $table->string('name');
+            $table->string('code');
             $table->integer('price');
             $table->integer('quantity');
             $table->timestamps();

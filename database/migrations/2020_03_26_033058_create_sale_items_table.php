@@ -18,6 +18,10 @@ class CreateSaleItemsTable extends Migration
             $table->foreignId('sales_id')
                 ->constrained()
                 ->onDelete('cascade');
+            $table->string('name');
+            $table->string('code');
+            $table->integer('quantity');
+            $table->integer('price');
             $table->timestamps();
         });
     }
