@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\Product;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Product;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductController extends ApiController
 {
     public function index()
     {
-        //
+        return $this->showAll(Product::all());
     }
-
 
     public function store(Request $request)
     {
@@ -21,9 +20,8 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        //
+        return $this->showOne(Product::all());
     }
-
 
     public function update(Request $request, Product $product)
     {

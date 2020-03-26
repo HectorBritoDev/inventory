@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Purchase;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Purchase;
 use Illuminate\Http\Request;
 
-class PurchaseController extends Controller
+class PurchaseController extends ApiController
 {
     public function index()
     {
-        //
+        return $this->showAll(Purchase::all());
     }
 
     public function store(Request $request)
@@ -20,7 +20,7 @@ class PurchaseController extends Controller
 
     public function show(Purchase $purchase)
     {
-        //
+        return $this->showOne(Purchase::all());
     }
 
     public function update(Request $request, Purchase $purchase)
