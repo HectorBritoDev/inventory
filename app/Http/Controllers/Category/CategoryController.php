@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Category;
 
 use App\Category;
 use App\Http\Controllers\ApiController;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
 
 class CategoryController extends ApiController
@@ -13,9 +14,8 @@ class CategoryController extends ApiController
         return $this->showAll(Category::all());
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-
     }
 
     public function show(Category $category)
