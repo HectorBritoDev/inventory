@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Resources\ProductCollection;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -10,17 +11,18 @@ class ProductController extends ApiController
 {
     public function index()
     {
-        return $this->showAll(Product::all());
+        return new ProductCollection(Product::all());
     }
 
-    public function store(Request $request)
+    public function store(StoreProduct $request)
     {
-        //
+        $product = Product::create($request->validated());
+        return new ProductResource($product);
     }
 
     public function show(Product $product)
     {
-        return $this->showOne(Product::all());
+        return new ProductCollection(Product::all());
     }
 
     public function update(Request $request, Product $product)
@@ -30,6 +32,7 @@ class ProductController extends ApiController
 
     public function destroy(Product $product)
     {
-        //
+        $product->destroy();
+        return [];
     }
 }
