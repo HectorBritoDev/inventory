@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Purchase;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Requests\StorePurchase;
 use App\Http\Resources\Purchase as PurchaseResource;
 use App\Http\Resources\PurchaseCollection;
 use App\Purchase;
@@ -15,9 +16,10 @@ class PurchaseController extends ApiController
         return new PurchaseCollection(Purchase::all());
     }
 
-    public function store(Request $request)
+    public function store(StorePurchase $request)
     {
-
+        $purchase = Purchase::create($request->validated());
+        return new PurchaseResource($purchase);
     }
 
     public function show(Purchase $purchase)
@@ -32,6 +34,7 @@ class PurchaseController extends ApiController
 
     public function destroy(Purchase $purchase)
     {
-        //
+        $purchase->delete();
+        return $this->successResponse([]);
     }
 }
