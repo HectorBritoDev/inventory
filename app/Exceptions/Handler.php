@@ -3,14 +3,7 @@
 namespace App\Exceptions;
 
 use App\Traits\ApiResponser;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -52,45 +45,46 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof ValidationException) {
-            return $this->convertValidationExceptionToResponse($exception, $request);
-        }
-        if ($exception instanceof ModelNotFoundException) {
-            $model = strtolower(class_basename($exception->getModel()));
-            return $this->errorResponse('no ' . $model . ' matches with the given id', 404);
-        }
-        if ($exception instanceof AuthenticationException) {
-            return $this->errorResponse('unathenticated', 401);
-        }
-        if ($exception instanceof AuthorizationException) {
-            return $this->errorResponse('forbidden, you dont have the permissions to execute this action', 403);
-        }
-        if ($exception instanceof NotFoundHttpException) {
-            return $this->errorResponse('url not found', 404);
-        }
-        if ($exception instanceof MethodNotAllowedHttpException) {
-            return $this->errorResponse($exception->getMessage(), 404);
-        }
-        if ($exception instanceof HttpResponseException) {
-            return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
-        }
-        if ($exception instanceof QueryException) {
-            $errorCode = $exception->errorInfo[1];
-            if ($errorCode === 1451) {
-                return $this->errorResponse('imposible to delete. foreing constraint violation', 409);
-            }
-        }
-        if (config('app.debug')) {
-            return parent::render($request, $exception);
-        }
-        return $this->errorResponse('internal server error', 500);
+        // if ($exception instanceof ValidationException) {
+        //     return $this->convertValidationExceptionToResponse($exception, $request);
+        // }
+        // if ($exception instanceof ModelNotFoundException) {
+        //     $model = strtolower(class_basename($exception->getModel()));
+        //     return $this->errorResponse('no ' . $model . ' matches with the given id', 404);
+        // }
+        // if ($exception instanceof AuthenticationException) {
+        //     return $this->errorResponse('unathenticated', 401);
+        // }
+        // if ($exception instanceof AuthorizationException) {
+        //     return $this->errorResponse('forbidden, you dont have the permissions to execute this action', 403);
+        // }
+        // if ($exception instanceof NotFoundHttpException) {
+        //     return $this->errorResponse('url not found', 404);
+        // }
+        // if ($exception instanceof MethodNotAllowedHttpException) {
+        //     return $this->errorResponse($exception->getMessage(), 404);
+        // }
+        // if ($exception instanceof HttpResponseException) {
+        //     return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
+        // }
+        // if ($exception instanceof QueryException) {
+        //     $errorCode = $exception->errorInfo[1];
+        //     if ($errorCode === 1451) {
+        //         return $this->errorResponse('imposible to delete. foreing constraint violation', 409);
+        //     }
+        // }
+        // if (config('app.debug')) {
+        //     return parent::render($request, $exception);
+        // }
+        // return $this->errorResponse('internal server error', 500)
+        return parent::render($request, $exception);
     }
 
-    protected function convertValidationExceptionToResponse(ValidationException $e, $request)
-    {
-        $errors = $e->validator->errors()->getMessages();
+    // protected function convertValidationExceptionToResponse(ValidationException $e, $request)
+    // {
+    //     $errors = $e->validator->errors()->getMessages();
 
-        return $this->errorResponse($errors, 422);
-    }
+    //     return $this->errorResponse($errors, 422);
+    // }
 
 }
