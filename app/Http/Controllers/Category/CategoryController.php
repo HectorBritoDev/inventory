@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Category;
 
 use App\Category;
-//use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryRequest;
 use App\Http\Requests\StoreCategory;
+use App\Http\Requests\UpdateCategory;
 use App\Http\Resources\Category as CategoryResource;
 use App\Http\Resources\CategoryCollection;
 use App\Traits\ApiResponser;
@@ -17,7 +16,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        return new CategoryCollection(Category::with('products')->get());
+        return new CategoryCollection(Category::all());
     }
 
     public function store(StoreCategory $request)
@@ -31,7 +30,7 @@ class CategoryController extends Controller
         return new CategoryResource($category);
     }
 
-    public function update(CategoryRequest $request, Category $category)
+    public function update(UpdateCategory $request, Category $category)
     {
         $category->fill($request->validated());
 
@@ -45,6 +44,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return showOne();
+        return $this->successResponse([]);
     }
 }
