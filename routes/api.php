@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('categories', 'Category\CategoryController')->except('create', 'edit');
-Route::resource('products', 'Product\ProductController')->except('create', 'edit');
-Route::resource('sales', 'Sale\SaleController')->except('create', 'edit');
-Route::resource('purchases', 'Purchase\PurchaseController')->except('create', 'edit');
+Route::apiResource('categories', 'Category\CategoryController');
+Route::apiResource('products', 'Product\ProductController');
+Route::apiResource('sales', 'Sale\SaleController');
+Route::apiResource('purchases', 'Purchase\PurchaseController');
