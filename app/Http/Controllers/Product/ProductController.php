@@ -3,12 +3,17 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Requests\StoreProduct;
+use App\Http\Requests\UpdateProduct;
+use App\Http\Resources\Product as ProductResource;
 use App\Http\Resources\ProductCollection;
 use App\Product;
-use Illuminate\Http\Request;
+use App\Traits\ApiResponser;
 
 class ProductController extends ApiController
 {
+    use ApiResponser;
+
     public function index()
     {
         return new ProductCollection(Product::all());
@@ -22,17 +27,24 @@ class ProductController extends ApiController
 
     public function show(Product $product)
     {
-        return new ProductCollection(Product::all());
+        return new ProductResource($product);
     }
 
-    public function update(Request $request, Product $product)
+    public function update(UpdateProduct $request, Product $product)
     {
-        //
+        $product->fill($request->validated());
+
+        if ($product->isClean()) {
+            return $this->errorResponse('at least one value to update must be different', 422);
+        }
+
+        $product->save();
+        return new ProductResource($product);
     }
 
     public function destroy(Product $product)
     {
-        $product->destroy();
-        return [];
+        $product->delete();
+        return $this->successResponse([]);
     }
 }
