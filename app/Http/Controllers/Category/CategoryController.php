@@ -3,33 +3,48 @@
 namespace App\Http\Controllers\Category;
 
 use App\Category;
-use App\Http\Controllers\ApiController;
+//use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreCategory;
+use App\Http\Resources\Category as CategoryResource;
+use App\Http\Resources\CategoryCollection;
+use App\Traits\ApiResponser;
 
-class CategoryController extends ApiController
+class CategoryController extends Controller
 {
+    use ApiResponser;
+
     public function index()
     {
-        return $this->showAll(Category::all());
+        return new CategoryCollection(Category::with('products')->get());
     }
 
-    public function store(CategoryRequest $request)
+    public function store(StoreCategory $request)
     {
+        $category = Category::create($request->validated());
+        return new CategoryResource($category);
     }
 
     public function show(Category $category)
     {
-        return $this->showOne($category);
+        return new CategoryResource($category);
     }
 
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
-        //
+        $category->fill($request->validated());
+
+        if ($category->isClean()) {
+            return $this->errorResponse('at least one value to update must be different', 422);
+        }
+        $category->save();
+        return new CategoryResource($category);
     }
 
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return showOne();
     }
 }
