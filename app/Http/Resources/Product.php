@@ -17,7 +17,10 @@ class Product extends JsonResource
         return [
             'name' => $this->name,
             'avaliable' => $this->quantity,
-            'price' => $this->price,
+            'unitary_price' => $this->unit_price,
+            'mayoritary_price' => $this->mayor_price,
+            'purchased_price' => $this->purchase_price,
+            'category_url' => route('categories.show', $this->category_id),
         ];
         return parent::toArray($request);
     }
