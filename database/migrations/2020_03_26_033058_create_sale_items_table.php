@@ -20,8 +20,8 @@ class CreateSaleItemsTable extends Migration
                 ->onDelete('cascade');
             $table->string('name');
             $table->string('code');
-            $table->integer('quantity');
-            $table->integer('price');
+            $table->float('quantity', 5, 1);
+            $table->float('price', 10, 2);
             $table->timestamps();
         });
     }

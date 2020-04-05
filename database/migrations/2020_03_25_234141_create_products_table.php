@@ -17,10 +17,10 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('code')->nullable()->unique();
             $table->string('name');
-            $table->integer('quantity');
-            $table->integer('unit_price')->nullable();
-            $table->integer('mayor_price')->nullable();
-            $table->integer('purchase_price')->nullable();
+            $table->float('quantity', 5, 1);
+            $table->float('unit_price', 10, 2)->nullable();
+            $table->float('mayor_price', 10, 2)->nullable();
+            $table->integer('minimum_to_apply_mayoritary_price')->nullable();
             $table->foreignId('category_id')
                 ->nullable()
                 ->constrained()
