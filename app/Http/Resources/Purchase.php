@@ -14,6 +14,12 @@ class Purchase extends JsonResource
      */
     public function toArray($request)
     {
+        return [
+            'id' => $this->id,
+            'date' => $this->created_at,
+            'message' => $this->message,
+            'items' => PurchaseItem::collection($this->whenLoaded('items')),
+        ];
         return parent::toArray($request);
     }
 }
