@@ -13,7 +13,7 @@ class StorePurchase extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class StorePurchase extends FormRequest
     public function rules()
     {
         return [
-            //
+            'items.*.product_id' => ['required'],
+            'items.*.quantity' => ['required', 'integer'],
+            'items.*.discount' => ['required', 'nullable'],
         ];
     }
 }
