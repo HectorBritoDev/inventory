@@ -20,8 +20,6 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        //Own Middlewares
-        \App\Http\Middleware\OnlyJsonRequests::class,
     ];
 
     /**
@@ -43,6 +41,8 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            //Own Middlewares
+            \App\Http\Middleware\OnlyJsonRequests::class,
         ],
     ];
 
