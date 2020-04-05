@@ -18,8 +18,9 @@ class PurchaseController extends ApiController
 
     public function store(StorePurchase $request)
     {
-        $purchase = Purchase::create($request->validated());
-        return new PurchaseResource($purchase);
+
+        $purchase = Purchase::create([]);
+        return new PurchaseResource($purchase->load('items'));
     }
 
     public function show(Purchase $purchase)
