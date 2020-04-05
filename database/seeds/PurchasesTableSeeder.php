@@ -16,8 +16,9 @@ class PurchasesTableSeeder extends Seeder
             $product = App\Product::inRandomOrder()->first();
             factory(App\PurchaseItem::class, 10)->create([
                 'purchase_id' => $purchase->id,
+                //        'product_id' => $product->id,
                 'name' => $product->name,
-                'code' => $product->code,
+                //'code' => $product->code,
                 'price' => $product->unit_price,
             ]);
         });

@@ -12,6 +12,6 @@ $factory->define(Product::class, function (Faker $faker) {
         'quantity' => $faker->randomNumber(3),
         'unit_price' => $faker->randomNumber(7),
         'mayor_price' => $faker->randomNumber(6),
-        'purchase_price' => $faker->randomNumber(5),
+        //'purchase_price' => $faker->randomNumber(5),
     ];
 });
