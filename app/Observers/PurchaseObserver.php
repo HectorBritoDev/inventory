@@ -2,9 +2,7 @@
 
 namespace App\Observers;
 
-use App\Product;
 use App\Purchase;
-use App\PurchaseItem;
 
 class PurchaseObserver
 {
@@ -16,20 +14,6 @@ class PurchaseObserver
      */
     public function created(Purchase $purchase)
     {
-        $request = request();
-        $items = [];
-        foreach ($request->items as $item) {
-            $product = Product::findOrFail($item['product_id']);
-            $product->increment('quantity', $item['quantity']);
-            $items[] = [
-                'purchase_id' => $purchase->id,
-                'name' => $product->name,
-                'price' => ($product->minimum_to_mayoritary_price >= $item['quantity']) ? $product->mayor_price : $product->unit_price,
-                'discount' => $item['discount'],
-                'quantity' => $item['quantity'],
-            ];
-        }
-        PurchaseItem::insert($items);
     }
 
     /**
