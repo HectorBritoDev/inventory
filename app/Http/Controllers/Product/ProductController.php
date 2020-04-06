@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\ApiController;
-use App\Http\Requests\StoreProduct;
-use App\Http\Requests\UpdateProduct;
+use App\Http\Requests\ProductRequest;
 use App\Http\Resources\Product as ProductResource;
 use App\Http\Resources\ProductCollection;
 use App\Product;
@@ -19,7 +18,7 @@ class ProductController extends ApiController
         return new ProductCollection(Product::all());
     }
 
-    public function store(StoreProduct $request)
+    public function store(ProductRequest $request)
     {
         $product = Product::create($request->validated());
         return new ProductResource($product);
@@ -30,7 +29,7 @@ class ProductController extends ApiController
         return new ProductResource($product);
     }
 
-    public function update(UpdateProduct $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
         $product->fill($request->validated());
 
