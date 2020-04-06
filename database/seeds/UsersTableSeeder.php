@@ -14,6 +14,7 @@ class UsersTableSeeder extends Seeder
         factory(App\User::class, 1)->create([
             'email' => 'user@test.com',
             'name' => 'admin',
+            'role' => App\User::ADMIN,
         ]);
     }
 }
