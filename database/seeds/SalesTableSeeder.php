@@ -16,7 +16,6 @@ class SalesTableSeeder extends Seeder
             factory(App\SaleItem::class, 10)->create([
                 'sale_id' => $sale->id,
                 'name' => $product->name,
-                'code' => $product->code,
                 'price' => $product->unit_price,
             ]);
         });
