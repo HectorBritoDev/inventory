@@ -19,9 +19,9 @@ class CreateSaleItemsTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
             $table->string('name');
-            $table->string('code');
             $table->float('quantity', 5, 1);
             $table->float('price', 10, 2);
+            $table->integer('discount')->nullable();
             $table->timestamps();
         });
     }
