@@ -27,7 +27,6 @@ class CreatePurchaseItemsTable extends Migration
             //  $table->string('code')->nullable();
             $table->float('price', 10, 2)->nullable();
             $table->float('quantity', 5, 1)->nullable();
-            $table->integer('discount')->nullable();
             $table->timestamps();
         });
     }

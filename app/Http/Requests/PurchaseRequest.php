@@ -23,18 +23,10 @@ class PurchaseRequest extends FormRequest
      */
     public function rules()
     {
-        switch ($this->method()) {
-            case 'POST':
-                return [
-                    'items.*.product_id' => ['required'],
-                    'items.*.quantity' => ['required', 'integer'],
-                    'items.*.discount' => ['nullable'],
-                ];
-                break;
+        return [
+            'items.*.product_id' => ['required'],
+            'items.*.quantity' => ['required', 'number'],
+        ];
 
-            default:
-                return [];
-                break;
-        }
     }
 }
