@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Purchase;
 
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\PurchaseRequest;
 use App\Http\Resources\Purchase as PurchaseResource;
 use App\Http\Resources\PurchaseCollection;
@@ -13,7 +13,7 @@ use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PurchaseController extends ApiController
+class PurchaseController extends Controller
 {
     use ApiResponser;
 
