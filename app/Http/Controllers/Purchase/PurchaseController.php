@@ -34,7 +34,6 @@ class PurchaseController extends ApiController
                 $items[] = [
                     'purchase_id' => $purchase->id,
                     'name' => $product->name,
-                    'price' => ($product->minimum_to_mayoritary_price >= $item['quantity']) ? $product->mayor_price : $product->unit_price,
                     'quantity' => $item['quantity'],
                 ];
             }
@@ -62,4 +61,5 @@ class PurchaseController extends ApiController
         $purchase->delete();
         return $this->successResponse([]);
     }
+
 }
