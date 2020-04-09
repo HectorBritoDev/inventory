@@ -13,6 +13,6 @@ class OnlyJsonRequests
         if ($request->expectsJson()) {
             return $next($request);
         }
-        return $this->errorResponse('api only available for json request', 422);
+        return $this->errorResponse('api only available for application/json request', 406);
     }
 }
