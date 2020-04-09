@@ -18,6 +18,12 @@ class CreateSaleItemsTable extends Migration
             $table->foreignId('sale_id')
                 ->constrained()
                 ->onDelete('cascade');
+
+            $table->foreignId('product_id')
+                ->nullable()
+                ->constrained()
+                ->onDelete('set null');
+
             $table->string('name');
             $table->float('quantity', 5, 1);
             $table->float('price', 10, 2);

@@ -19,9 +19,10 @@ class CreatePurchaseItemsTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
 
-            // $table->foreignId('product_id')
-            //     ->constrained()
-            //     ->onDelete('cascade');
+            $table->foreignId('product_id')
+                ->nullable()
+                ->constrained()
+                ->onDelete('set null');
 
             $table->string('name')->nullable();
             //  $table->string('code')->nullable();
