@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Purchase;
 
 use App\Http\Controllers\ApiController;
-use App\Http\Requests\StorePurchase;
+use App\Http\Requests\PurchaseRequest;
 use App\Http\Resources\Purchase as PurchaseResource;
 use App\Http\Resources\PurchaseCollection;
 use App\Product;
@@ -22,21 +22,12 @@ class PurchaseController extends ApiController
         return new PurchaseCollection(Purchase::all());
     }
 
-    public function store(StorePurchase $request)
+    public function store(PurchaseRequest $request)
     {
         try {
             DB::beginTransaction();
             $purchase = Purchase::create([]);
-            $items = [];
-            foreach ($request->items as $item) {
-                $product = Product::findOrFail($item['product_id']);
-                $product->increment('quantity', $item['quantity']);
-                $items[] = [
-                    'purchase_id' => $purchase->id,
-                    'name' => $product->name,
-                    'quantity' => $item['quantity'],
-                ];
-            }
+            $items = $this->prepareArrayToInsert($request->items, $purchase->id);
             PurchaseItem::insert($items);
             DB::commit();
         } catch (\Throwable $th) {
@@ -56,10 +47,21 @@ class PurchaseController extends ApiController
         //
     }
 
-    public function destroy(Purchase $purchase)
+    public function prepareArrayToInsert($items, $purchase_id)
     {
-        $purchase->delete();
-        return $this->successResponse([]);
+        $preparedItems = [];
+        foreach ($items as $key => $item) {
+            $product = Product::findOrFail($item['product_id']);
+            $product->increment('quantity', $item['quantity']);
+            $preparedItems[] = [
+                'purchase_id' => $purchase_id,
+                'name' => $product->name,
+                'quantity' => $item['quantity'],
+            ];
+        }
+
+        return $preparedItems;
+
     }
 
 }
