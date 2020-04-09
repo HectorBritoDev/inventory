@@ -25,7 +25,7 @@ class PurchaseRequest extends FormRequest
     {
         return [
             'items.*.product_id' => ['required'],
-            'items.*.quantity' => ['required', 'number'],
+            'items.*.quantity' => ['required', 'numeric'],
             'message' => ['nullable', 'string'],
         ];
 
