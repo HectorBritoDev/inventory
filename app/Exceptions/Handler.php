@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -75,6 +76,12 @@ class Handler extends ExceptionHandler
         if ($exception instanceof HttpResponseException) {
             return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
         }
+
+        if ($exception instanceof HttpException) {
+            dd($exception->getStatusCode());
+            return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
+        }
+
         if ($exception instanceof QueryException) {
             $errorCode = $exception->errorInfo[1];
             if ($errorCode === 1451) {
