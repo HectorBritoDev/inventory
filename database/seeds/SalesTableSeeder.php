@@ -17,6 +17,7 @@ class SalesTableSeeder extends Seeder
                 'sale_id' => $sale->id,
                 'name' => $product->name,
                 'price' => $product->unit_price,
+                'total' => $product->unit_price,
             ]);
         });
 

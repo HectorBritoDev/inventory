@@ -21,6 +21,7 @@ class CreateSaleItemsTable extends Migration
             $table->string('name');
             $table->float('quantity', 5, 1);
             $table->float('price', 10, 2);
+            $table->float('total', 10, 2);
             $table->integer('discount')->nullable();
             $table->timestamps();
         });

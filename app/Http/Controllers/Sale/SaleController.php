@@ -27,13 +27,14 @@ class SaleController extends Controller
             DB::beginTransaction();
             $sale = Sale::create($request->validated());
             $items = $this->prepareArrayToInsertion($request->items, $sale->id);
-            $total_price = collect($items)->pluck('price')->sum();
+            $total_price = collect($items)->pluck('total')->sum();
             $sale->update(['total_price' => $total_price]);
             SaleItem::insert($items);
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
-            return $this->errorResponse($th->getMessage(), $th->getStatusCode());
+            $code = method_exists($th, 'getStatusCode') ? $th->getStatusCode() : 500;
+            return $this->errorResponse($th->getMessage(), $code);
         }
         return new SaleResource($sale);
     }
@@ -65,7 +66,8 @@ class SaleController extends Controller
                 'name' => $product->name,
                 'quantity' => $item['quantity'],
                 'discount' => $discount = $this->discount($item, $price),
-                'price' => $price - $discount,
+                'price' => $total = $price - $discount,
+                'total' => $total * $item['quantity'],
             ];
             $product->decrement('quantity', $item['quantity']);
         }
