@@ -36,12 +36,12 @@ class SaleController extends Controller
             $code = method_exists($th, 'getStatusCode') ? $th->getStatusCode() : 500;
             return $this->errorResponse($th->getMessage(), $code);
         }
-        return new SaleResource($sale);
+        return new SaleResource($sale->load('items'));
     }
 
     public function show(Sale $sale)
     {
-        return new SaleResource(Sale::all());
+        return new SaleResource($sale);
     }
 
     public function update(Request $request, Sale $sale)
