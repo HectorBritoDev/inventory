@@ -21,4 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResource('categories', 'Category\CategoryController');
 Route::apiResource('products', 'Product\ProductController');
 Route::apiResource('sales', 'Sale\SaleController')->only('index', 'show', 'store');
+Route::apiResource('sales.items', 'Sale\SaleItemController')->only('index');
 Route::apiResource('purchases', 'Purchase\PurchaseController')->only('index', 'show', 'store');
+Route::apiResource('purchases.items', 'Purchase\PurchaseItemController')->only('index');
