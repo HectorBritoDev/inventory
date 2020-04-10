@@ -39,7 +39,7 @@ class PurchaseController extends Controller
 
     public function show(Purchase $purchase)
     {
-        return new PurchaseResource(Purchase::all());
+        return new PurchaseResource($purchase);
     }
 
     public function update(Request $request, Purchase $purchase)
