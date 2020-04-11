@@ -13,6 +13,10 @@ class CategoryController extends Controller
 {
     use ApiResponser;
 
+    public function __construct()
+    {
+        $this->authorizeResource(Category::class, 'categories');
+    }
     public function index()
     {
         return new CategoryCollection(Category::all());
