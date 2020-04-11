@@ -10,6 +10,7 @@ class User extends Authenticatable
     use Notifiable;
 
     const ADMIN = 1;
+    const EMPLOYEE = 2;
     /**
      * The attributes that are mass assignable.
      *
@@ -36,4 +37,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isAdmin()
+    {
+        return $this->role === self::ADMIN;
+    }
+    public function isEmployee()
+    {
+        return $this->role === self::EMPLOYEE;
+    }
 }
