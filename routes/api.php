@@ -24,3 +24,8 @@ Route::apiResource('sales', 'Sale\SaleController')->only('index', 'show', 'store
 Route::apiResource('sales.items', 'Sale\SaleItemController')->only('index');
 Route::apiResource('purchases', 'Purchase\PurchaseController')->only('index', 'show', 'store');
 Route::apiResource('purchases.items', 'Purchase\PurchaseItemController')->only('index');
+
+Route::post('login', 'Auth\Passport\PassportAuthController@login');
+Route::post('logout', 'Auth\Passport\PassportAuthController@logout')->middleware('auth:api');
+Route::post('refresh-token', 'Auth\Passport\PassportAuthController@refresh')->middleware('auth:api');
+// Auth::routes(['register' => false]);
