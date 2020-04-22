@@ -62,6 +62,9 @@ class Handler extends ExceptionHandler
             return $this->errorResponse('no ' . $model . ' matches with the given id', 404);
         }
         if ($exception instanceof AuthenticationException) {
+            if ($this->isFrontend($request)) {
+                return redirect()->guest('login');
+            }
             return $this->errorResponse('unathenticated', 401);
         }
         if ($exception instanceof AuthorizationException) {
@@ -78,7 +81,6 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof HttpException) {
-            dd($exception->getStatusCode());
             return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
         }
 
@@ -98,8 +100,17 @@ class Handler extends ExceptionHandler
     protected function convertValidationExceptionToResponse(ValidationException $e, $request)
     {
         $errors = $e->validator->errors()->getMessages();
-
+        if ($this->isFrontend($request)) {
+            return $request->ajax()
+            ? $response->json($errors, 422)
+            : redirect()->back()->withInput($request->input())->withErrors($errors);
+        }
         return $this->errorResponse($errors, 422);
+    }
+
+    private function isFrontend($request)
+    {
+        return $request->acceptsHtml($request) && collect($request->route()->middleware())->contains('web');
     }
 
 }
