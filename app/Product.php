@@ -19,4 +19,9 @@ class Product extends Model
     {
         return $this->belongsTo('App\Category');
     }
+
+    public function sales()
+    {
+        return $this->hasMany('App\SaleItem');
+    }
 }
