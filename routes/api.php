@@ -31,4 +31,4 @@ Route::post('refresh-token', 'Auth\Passport\PassportAuthController@refresh')->mi
 // Auth::routes(['register' => false]);
 
 //Statistics
-Route::get('sales/top-product/{how_many}', 'Sale\SaleItemController@topProduct');
+Route::get('stadistics/top{how_many}-selling-products', 'Stadistic\SaleStadisticController@topSellingProduct');
