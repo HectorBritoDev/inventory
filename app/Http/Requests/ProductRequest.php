@@ -30,12 +30,11 @@ class ProductRequest extends FormRequest
                     'category_id' => ['nullable', 'exists:categories,id'],
                     'code' => ['nullable', 'unique:products,code'],
                     'name' => ['required', 'string'],
-                    'quantity' => ['required', 'float'],
-                    'mayor_price' => ['nullable', 'float'],
-                    'unit_price' => ['nullable', 'float'],
+                    'quantity' => ['required', 'numeric'],
+                    'mayor_price' => ['nullable', 'numeric'],
+                    'unit_price' => ['nullable', 'numeric'],
                     'minimum_to_apply_mayoritary_price' => ['nullable', 'integer'],
                 ];
-                break;
 
             case ('PUT' || 'PATCH'):
                 return [
@@ -53,7 +52,6 @@ class ProductRequest extends FormRequest
 
             default:
                 return [];
-                break;
         }
     }
 }
