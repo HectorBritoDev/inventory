@@ -15,11 +15,16 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::with(['sales'=> function($query){
-            $query->selectRaw('product_id,SUM(quantity) as total_units_sold')->groupBy('product_id');
-        }])
-        ->get();
-        
+        $products = Product::with([
+            'sales' => function ($query) {
+                $query->selectRaw('product_id,SUM(quantity) as total_units_sold')->groupBy('product_id');
+            },
+            'purchases' => function ($query) {
+                $query->selectRaw('product_id, MAX(created_at) as last_time_purchased')->groupBy('product_id');
+            },
+        ])
+            ->get();
+
         return new ProductCollection($products);
     }
 
