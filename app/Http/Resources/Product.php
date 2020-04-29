@@ -26,6 +26,7 @@ class Product extends JsonResource
                 return route('categories.show', $this->category_id);
             }),
             'stadistics' => [
+                'last_time_purchased' => $this->purchases->count() > 0 ? $this->purchases->first()->last_time_purchased : 'never purchased',
                 'total_units_sold' => $this->sales->count() > 0 ? $this->sales->first()->total_units_sold : 0,
             ],
         ];
