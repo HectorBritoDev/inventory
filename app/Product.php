@@ -24,4 +24,8 @@ class Product extends Model
     {
         return $this->hasMany('App\SaleItem');
     }
+    public function purchases()
+    {
+        return $this->hasMany('App\PurchaseItem');
+    }
 }
