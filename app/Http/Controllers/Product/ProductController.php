@@ -16,9 +16,9 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with(['sales'=> function($query){
-            $query->selectRaw('product_id,SUM(quantity) as quantity_units')->groupBy('product_id');
+            $query->selectRaw('product_id,SUM(quantity) as total_units_sold')->groupBy('product_id');
         }])
-        ->paginate(1000);
+        ->get();
         
         return new ProductCollection($products);
     }
