@@ -7,6 +7,8 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Resources\Product as ProductResource;
 use App\Http\Resources\ProductCollection;
 use App\Product;
+use App\PurchaseItem;
+use App\SaleItem;
 use App\Traits\ApiResponser;
 
 class ProductController extends Controller
@@ -36,6 +38,18 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
+        // $product->load([
+        //     'sales' => function ($query) use ($product) {
+        //         $query->selectRaw('product_id,SUM(quantity) as total_units_sold')->whereProductId($product->id)->groupBy('product_id');
+        //     },
+        //     'purchases' => function ($query) use ($product) {
+        //         $query->selectRaw('product_id, MAX(created_at) as last_time_purchased')->whereProductId($product->id)->groupBy('product_id');
+        //     },
+        // ]);
+
+        $product->sales = SaleItem::selectRaw('product_id,SUM(quantity) as total_units_sold')->whereProductId($product->id)->groupBy('product_id')->get();
+        $product->purchases = PurchaseItem::selectRaw('product_id, MAX(created_at) as last_time_purchased')->whereProductId($product->id)->groupBy('product_id')->get();
+
         return new ProductResource($product);
     }
 
