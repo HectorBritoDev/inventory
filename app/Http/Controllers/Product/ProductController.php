@@ -19,7 +19,7 @@ class ProductController extends Controller
     {
         $products = Product::with([
             'sales' => function ($query) {
-                $query->selectRaw('product_id,SUM(quantity) as total_units_sold')->groupBy('product_id');
+                $query->selectRaw('product_id,SUM(quantity) as total_units_sold, SUM(total) as total_price_sold_ever, COUNT(discount) as times_sold_with_discount')->groupBy('product_id');
             },
             'purchases' => function ($query) {
                 $query->selectRaw('product_id, MAX(created_at) as last_time_purchased')->groupBy('product_id');
@@ -47,7 +47,7 @@ class ProductController extends Controller
         //     },
         // ]);
 
-        $product->sales = SaleItem::selectRaw('product_id,SUM(quantity) as total_units_sold')->whereProductId($product->id)->groupBy('product_id')->get();
+        $product->sales = SaleItem::selectRaw('product_id,SUM(quantity) as total_units_sold, SUM(total) as total_price_sold_ever,COUNT(discount) as times_sold_with_discount')->whereProductId($product->id)->groupBy('product_id')->get();
         $product->purchases = PurchaseItem::selectRaw('product_id, MAX(created_at) as last_time_purchased')->whereProductId($product->id)->groupBy('product_id')->get();
 
         return new ProductResource($product);
