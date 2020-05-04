@@ -22,7 +22,7 @@ class Product extends JsonResource
             'unitary_price' => $this->unit_price,
             'mayoritary_price' => $this->mayor_price,
             'purchased_price' => $this->purchase_price,
-            'category_url' => $this->when($category, function () {
+            'category_url' => $this->when($this->category_id != null, function () {
                 return route('categories.show', $this->category_id);
             }),
             'stadistics' => [
