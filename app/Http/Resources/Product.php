@@ -14,7 +14,6 @@ class Product extends JsonResource
      */
     public function toArray($request)
     {
-        $category = $this->category_id != null;
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -28,6 +27,8 @@ class Product extends JsonResource
             'stadistics' => [
                 'last_time_purchased' => $this->purchases->count() > 0 ? $this->purchases->first()->last_time_purchased : 'never purchased',
                 'total_units_sold' => $this->sales->count() > 0 ? $this->sales->first()->total_units_sold : 0,
+                'total_price_sold_ever' => $this->sales->count() > 0 ? $this->sales->first()->total_price_sold_ever : 0,
+                'times_sold_with_discount' => $this->sales->count() > 0 ? $this->sales->first()->times_sold_with_discount : 0,
             ],
         ];
         // return parent::toArray($request);
