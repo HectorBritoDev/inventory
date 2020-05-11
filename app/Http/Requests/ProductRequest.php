@@ -54,4 +54,17 @@ class ProductRequest extends FormRequest
                 return [];
         }
     }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'category_id' => $this->category,
+            'code' => $this->code,
+            'name' => $this->name,
+            'quantity' => $this->quantity,
+            'mayor_price' => $this->mayoritary_price,
+            'unit_price' => $this->unitary_price,
+            'minimum_to_apply_mayoritary_price' => $this->apply_mayoritary_price_sice,
+        ]);
+    }
 }
