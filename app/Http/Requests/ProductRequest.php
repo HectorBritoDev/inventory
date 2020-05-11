@@ -32,7 +32,7 @@ class ProductRequest extends FormRequest
                     'name' => ['required', 'string'],
                     'quantity' => ['required', 'numeric'],
                     'mayor_price' => ['nullable', 'numeric'],
-                    'unit_price' => ['nullable', 'numeric'],
+                    'unit_price' => ['required', 'numeric'],
                     'minimum_to_apply_mayoritary_price' => ['nullable', 'integer'],
                 ];
 
@@ -67,4 +67,18 @@ class ProductRequest extends FormRequest
             'minimum_to_apply_mayoritary_price' => $this->apply_mayoritary_price_sice,
         ]);
     }
+
+    public function attributes()
+    {
+        return [
+            'category_id' => 'category',
+            'code' => 'code',
+            'name' => 'name',
+            'quantity' => 'quantity',
+            'mayor_price' => 'mayoritary_price',
+            'unit_price' => 'unitary_price',
+            'minimum_to_apply_mayoritary_price' => 'apply_mayoritary_price_sice',
+        ];
+    }
+
 }
