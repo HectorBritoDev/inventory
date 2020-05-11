@@ -64,7 +64,7 @@ class ProductRequest extends FormRequest
             'quantity' => $this->quantity,
             'mayor_price' => $this->mayoritary_price,
             'unit_price' => $this->unitary_price,
-            'minimum_to_apply_mayoritary_price' => $this->apply_mayoritary_price_sice,
+            'minimum_to_apply_mayoritary_price' => $this->apply_mayoritary_price_since,
         ]);
     }
 
@@ -77,7 +77,7 @@ class ProductRequest extends FormRequest
             'quantity' => 'quantity',
             'mayor_price' => 'mayoritary_price',
             'unit_price' => 'unitary_price',
-            'minimum_to_apply_mayoritary_price' => 'apply_mayoritary_price_sice',
+            'minimum_to_apply_mayoritary_price' => 'apply_mayoritary_price_since',
         ];
     }
 
