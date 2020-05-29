@@ -16,13 +16,17 @@ class Product extends JsonResource
     {
         return [
             'id' => $this->id,
+            'code'=>$this->code,
             'name' => $this->name,
             'available' => $this->quantity,
             'unitary_price' => $this->unit_price,
             'mayoritary_price' => $this->mayor_price,
             'purchased_price' => $this->purchase_price,
-            'category_url' => $this->when($this->category_id != null, function () {
-                return route('categories.show', $this->category_id);
+            // 'category_url' => $this->when($this->category_id != null, function () {
+            //     return route('categories.show', $this->category_id);
+            // }),
+            'category' => $this->when($this->category_id != null, function () {
+                return $this->category->name;
             }),
             'stadistics' => [
                 'last_time_purchased' => $this->purchases->count() > 0 ? $this->purchases->first()->last_time_purchased : 'never purchased',
