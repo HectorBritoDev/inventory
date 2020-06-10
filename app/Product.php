@@ -15,6 +15,7 @@ class Product extends Model
         'unit_price',
         'mayor_price',
         'purchase_price',
+        'apply_mayoritary_price_since'
     ];
     public function category()
     {
