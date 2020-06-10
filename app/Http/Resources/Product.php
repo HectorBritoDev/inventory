@@ -16,7 +16,7 @@ class Product extends JsonResource
     {
         return [
             'id' => $this->id,
-            'code'=>$this->code,
+            'code' => $this->code,
             'name' => $this->name,
             'available' => $this->quantity,
             'unitary_price' => $this->unit_price,
@@ -25,15 +25,21 @@ class Product extends JsonResource
             // 'category_url' => $this->when($this->category_id != null, function () {
             //     return route('categories.show', $this->category_id);
             // }),
-            'category' => $this->when($this->category_id != null, function () {
-                return $this->category->name;
+            'category' => $this->when($this->category != null, function () {
+                return [
+                    'id' => $this->category->id,
+                    'name' => $this->category->name,
+                ];
             }),
-            'stadistics' => [
-                'last_time_purchased' => $this->purchases->count() > 0 ? $this->purchases->first()->last_time_purchased : 'never purchased',
-                'total_units_sold' => $this->sales->count() > 0 ? $this->sales->first()->total_units_sold : 0,
-                'total_price_sold_ever' => $this->sales->count() > 0 ? $this->sales->first()->total_price_sold_ever : 0,
-                'times_sold_with_discount' => $this->sales->count() > 0 ? $this->sales->first()->times_sold_with_discount : 0,
-            ],
+            'stadistics' => $this->when($this->purchases || $this->sales, function () {
+                return [
+                    'last_time_purchased' => $this->purchases->count() > 0 ? $this->purchases->first()->last_time_purchased : 'never purchased',
+                    'total_units_sold' => $this->sales->count() > 0 ? $this->sales->first()->total_units_sold : 0,
+                    'total_price_sold_ever' => $this->sales->count() > 0 ? $this->sales->first()->total_price_sold_ever : 0,
+                    'times_sold_with_discount' => $this->sales->count() > 0 ? $this->sales->first()->times_sold_with_discount : 0,
+                ];
+            }),
+
         ];
         // return parent::toArray($request);
     }
